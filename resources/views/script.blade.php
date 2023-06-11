@@ -29,6 +29,49 @@ $(document).ready(function()
                 if(res.status=='success'){
                     $('#addModal').modal('hide');
                     $('#addProductForm')[0].reset();
+                    $('.table').load(location.href+'.table');
+                }
+            },error:function(err){
+               let error= err.responseJSON;
+               $.each(error.errors,function(index,value){
+
+                $('.errMsgContainer').append('<span class="text-danger">'+value+'</span>'+'<br>');
+               });
+            }
+        });
+    });
+
+
+    ///update Product
+    $(document).on('click','.update_product_form',function(){
+        let id = $(this).data('id');
+        let name=$(this).data('name');
+        let price=$(this).data('price');
+
+        $('#u_id').val(id);
+        $('#u_name').val(name);
+        $('#u_price').val(price);
+    });
+
+    //update data product
+    
+    $(document).on('click','.update_product',function(e){
+        e.preventDefault();
+        let u_id = $('#u_id').val();
+        let u_name = $('#u_name').val();
+        let u_price = $('#u_price').val();
+
+        $.ajax({
+
+            url:"{{ route('update.product') }}",
+            method:'POST',
+            data:{u_id:u_id,u_name:u_name,u_price:u_price},
+            success:function(res){
+
+                if(res.status=='success'){
+                    $('#updateModal').modal('hide');
+                    $('#updateProductForm')[0].reset();
+                    $('.table').load(location.href+'.table');
                 }
             },error:function(err){
                let error= err.responseJSON;
@@ -40,4 +83,5 @@ $(document).ready(function()
         });
     })
     });
+
 </script>

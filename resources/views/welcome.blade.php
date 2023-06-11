@@ -22,7 +22,8 @@
             <div class="col-md-8">
                 <h2 class="my-5 text-center">my CRUD</h2>
                 <div class="table-data">
-                    <a href="#" type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#addModal">Add Product</a>
+                    <a href="#" type="button" class="btn btn-primary my-2" data-bs-toggle="modal"
+                        data-bs-target="#addModal">Add Product</a>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -33,26 +34,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>
-                                    <a href="" class="btn btn-success"><i class="las la-edit"></i></a>
-                                    <a href="" class="btn btn-danger"><i class="las la-times"></i></a>
-                                </td>
-                            </tr>
+                            @foreach ($products as $key => $product)
+                                <tr>
+                                    <th>{{ $key + 1 }}</th>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>
+                                        <a href="" type="button" class="btn btn-primary update_product_form"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#updateModal"
+                                            data-id="{{ $product->id }}"
+                                            data-name="{{ $product->name }}"
+                                            data-price="{{ $product->price }}">
+                                            <i class="las la-edit"></i></a>
+                                        <a href="" class="btn btn-danger"><i class="las la-times"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>
+                </div>
+                <div class="text-center p-2 m-2">
+                    {!! $products->links() !!}
                 </div>
             </div>
         </div>
     </div>
 
 
-@include('add_product')
-@include('script');
+    @include('add_product');
+    @include('update_product');
+    @include('script');
 
 
 </body>

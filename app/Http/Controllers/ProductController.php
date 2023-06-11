@@ -9,7 +9,8 @@ class ProductController extends Controller
 {
     public function products()
     {
-        return view('welcome');
+        $products=Product::latest()->paginate(5);
+        return view('welcome',compact('products'));
     }
 
 
@@ -33,5 +34,27 @@ class ProductController extends Controller
     return response()->json([
         'status'=>'success',
     ]);
+    }
+
+
+    public function updateProduct(Request $request)
+    {
+
+        $request->validate([
+
+            'u_name'=>'required|unique:products,name,'.$request->u_id,
+            'u_price'=>'required'
+        ],
+        [
+            'u_name.required'=>'Name is Required',
+            'u_price.unique'=>'Product All ready Exsist',
+            'u_price.required'=>'Price is Required',
+        ]);
+        
+       $pro= Product::where('id',$request->u_id)->update([
+            'name'=>$request->u_name,
+            'price'=>$request->u_price,
+        ]);
+        return response()->json(['status'=>'success']);
     }
 }
