@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[ProductController::class,'products'])->name('products');
-Route::get('add_product',[ProductController::class,'add_product'])->name('add_product');
+Route::post('/add-product',[ProductController::class,'addProduct'])->name('add.product');

@@ -13,7 +13,7 @@
         </div>
         <div class="modal-body">
 
-        <div class="erMsgContainer">
+        <div class="errMsgContainer">
 
         </div>
     </div>
